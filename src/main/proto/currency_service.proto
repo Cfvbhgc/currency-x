@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package currencyx;
+
+option java_multiple_files = true;
+option java_package = "com.currencyx.grpc.proto";
+option java_outer_classname = "CurrencyServiceProto";
+
+service CurrencyService {
+    rpc GetRate (RateRequest) returns (RateResponse);
+    rpc Convert (ConvertRequest) returns (ConvertResponse);
+    rpc GetRateHistory (RateHistoryRequest) returns (RateHistoryResponse);
+}
+
+message RateRequest {
+    string from_currency = 1;
+    string to_currency = 2;
+}
+
+message RateResponse {
+    string from_currency = 1;
+    string to_currency = 2;
+    string rate = 3;
+    int64 timestamp = 4;
+}
+
+message ConvertRequest {
+    string from_currency = 1;
+    string to_currency = 2;
+    string amount = 3;
+}
+
+message ConvertResponse {
+    string from_currency = 1;
+    string to_currency = 2;
+    string original_amount = 3;
+    string converted_amount = 4;
+    string rate = 5;
+    int64 timestamp = 6;
+}
+
+message RateHistoryRequest {
+    string from_currency = 1;
+    string to_currency = 2;
+    int32 limit = 3;
+}
+
+message RateHistoryResponse {
+    string from_currency = 1;
+    string to_currency = 2;
+    repeated HistoricalRate rates = 3;
+}
+
+message HistoricalRate {
+    string rate = 1;
+    int64 timestamp = 2;
+}
